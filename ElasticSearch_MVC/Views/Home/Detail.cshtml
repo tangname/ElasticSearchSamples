@@ -1,0 +1,94 @@
+﻿@model ElasticeSearch_Service.Dtos.Article
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Detail</title>
+</head>
+<body>
+    <div>
+        <h4>Article</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Author)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Author)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TypeName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TypeName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Downloads)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Downloads)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Browses)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Browses)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.IsRecommend)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.IsRecommend)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CreateTime)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreateTime)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Creater)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Creater)
+            </dd>
+    
+        </dl>
+    </div>
+</body>
+</html>

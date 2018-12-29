@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@model ElasticSearch_MVC.Controllers.ArticleResultVM
+
+<div style="height:10px;"></div>
+<div class="container">
+    @using (Html.BeginForm("GetArticles", "Home", FormMethod.Post, new { id = "searchForm" }))
+    {
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control"
+                           placeholder="请输入搜索关键字"
+                           value="@Model.Input.Key"
+                           name="Key" autocomplete="off" />
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group date"
+                                 data-date="2018-10-22"
+                                 data-date-format="yyyy-mm-dd"
+                                 data-link-field="BeginDate"
+                                 data-link-format="yyyy-mm-dd">
+                                <input class="form-control" size="16" type="text" value="" readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                            <input type="hidden" id="BeginDate" name="BeginDate" value="" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input-group date end_date"
+                                 data-date="@Model.Input.EndDate"
+                                 data-date-format="yyyy-mm-dd"
+                                 data-link-field="EndDate"
+                                 data-link-format="yyyy-mm-dd">
+                                <input class="form-control" size="16" type="text" value="" readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                            <input type="hidden" id="EndDate" name="EndDate" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="button" class="btn btn-primary event-search" Action="search" value="搜索" />
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <input type="button" class="btn btn-default event-search" action="pre" value="《" />
+                        <input type="text" id="currentPage" value="@Model.Input.Page" readonly name="Page"
+                               class="form-control"
+                               style="width:50px!important;display:inline;" />
+                        <input type="button" class="btn btn-default event-search" action="next" value="》" />
+                        @*排序：
+                            <select name="Sort" id="sortSelect" class="form-control" style="width:100px!important;display:inline;">
+                                <option value="0" @(Model.Input.Sort == 0 ? "selected=\"selected\"" : "")>时间</option>
+                                <option value="1" @(Model.Input.Sort == 1 ? "selected=\"selected\"" : "")>查看量</option>
+                                <option value="2" @(Model.Input.Sort == 2 ? "selected=\"selected\"" : "")>下载量</option>
+                            </select>*@
+                        文档数量：<span id="total">@Model.Output.TotalCount</span>
+                    </div>
+                    <div style="height:10px;"></div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-striped">
+                    @foreach (var hit in Model.Output.Documents)
+                    {
+                        var item = hit.Source;
+
+                        <tr>
+                            <td>
+                                <div>
+                                    <a href="/Home/Detail/@item.Id" target="_blank"><span style="font-size:18px;font-weight:600;">@item.Title</span></a>
+                                </div>
+                                <div>
+                                    下载量：@item.Downloads 阅读量：@item.Browses &nbsp;&nbsp;&nbsp;&nbsp; @item.CreateTime.ToShortDateString()
+                                    匹配得分：@hit.Score
+                                </div>
+                                <div>
+                                    @item.Description
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('.date').datetimepicker({
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+            });
+
+            $(".event-search").click(function () {
+                var action = $(this).attr("action");
+                var currentPage = parseInt($("#currentPage").val());
+
+                switch (action) {
+                    case "pre": currentPage -= 1; break;
+                    case "next": currentPage += 1; break;
+                }
+
+                $("#currentPage").val(currentPage);
+
+                $("#searchForm").submit();
+            });
+
+            $("#sortSelect").change(function () {
+                $("#searchForm").submit();
+            });
+        });
+    </script>
+}
