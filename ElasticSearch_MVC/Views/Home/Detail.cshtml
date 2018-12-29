@@ -1,4 +1,4 @@
-﻿@model ElasticeSearch_Service.Dtos.Article
+﻿@model ElasticSearch_MVC.Controllers.DetailVM
 
 @{
     Layout = null;
@@ -13,82 +13,89 @@
 </head>
 <body>
     <div>
-        <h4>Article</h4>
+        <h4>明细：</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.Article.Title)
             </dt>
-    
+
             <dd>
-                @Html.DisplayFor(model => model.Title)
+                @Html.DisplayFor(model => model.Article.Title)
             </dd>
-    
+
             <dt>
-                @Html.DisplayNameFor(model => model.Author)
+                @Html.DisplayNameFor(model => model.Article.Author)
             </dt>
-    
+
             <dd>
-                @Html.DisplayFor(model => model.Author)
+                @Html.DisplayFor(model => model.Article.Author)
             </dd>
-    
+
             <dt>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Article.Description)
             </dt>
-    
+
             <dd>
-                @Html.DisplayFor(model => model.Description)
+                @Html.DisplayFor(model => model.Article.Description)
             </dd>
-    
+
             <dt>
-                @Html.DisplayNameFor(model => model.TypeName)
+                @Html.DisplayNameFor(model => model.Article.TypeName)
             </dt>
-    
+
             <dd>
-                @Html.DisplayFor(model => model.TypeName)
+                @Html.DisplayFor(model => model.Article.TypeName)
             </dd>
-    
+
             <dt>
-                @Html.DisplayNameFor(model => model.Downloads)
+                @Html.DisplayNameFor(model => model.Article.Downloads)
             </dt>
-    
+
             <dd>
-                @Html.DisplayFor(model => model.Downloads)
+                @Html.DisplayFor(model => model.Article.Downloads)
             </dd>
-    
+
             <dt>
-                @Html.DisplayNameFor(model => model.Browses)
+                @Html.DisplayNameFor(model => model.Article.Browses)
             </dt>
-    
+
             <dd>
-                @Html.DisplayFor(model => model.Browses)
+                @Html.DisplayFor(model => model.Article.Browses)
             </dd>
-    
+
             <dt>
-                @Html.DisplayNameFor(model => model.IsRecommend)
+                @Html.DisplayNameFor(model => model.Article.IsRecommend)
             </dt>
-    
+
             <dd>
-                @Html.DisplayFor(model => model.IsRecommend)
+                @Html.DisplayFor(model => model.Article.IsRecommend)
             </dd>
-    
+
             <dt>
-                @Html.DisplayNameFor(model => model.CreateTime)
+                @Html.DisplayNameFor(model => model.Article.CreateTime)
             </dt>
-    
+
             <dd>
-                @Html.DisplayFor(model => model.CreateTime)
+                @Html.DisplayFor(model => model.Article.CreateTime)
             </dd>
-    
+
             <dt>
-                @Html.DisplayNameFor(model => model.Creater)
+                @Html.DisplayNameFor(model => model.Article.Creater)
             </dt>
-    
+
             <dd>
-                @Html.DisplayFor(model => model.Creater)
+                @Html.DisplayFor(model => model.Article.Creater)
             </dd>
-    
+
         </dl>
+    </div>
+    <div>
+        <h4>匹配解析：</h4>
+        <hr />
+        <textarea rows="20" style="width:100%">
+            @Model.Explanation
+        </textarea>
     </div>
 </body>
 </html>

@@ -2,6 +2,8 @@
     ViewBag.Title = "Home Page";
 }
 
+@using ElasticSearch_MVC.Controllers;
+
 @model ElasticSearch_MVC.Controllers.ArticleResultVM
 
 <div style="height:10px;"></div>
@@ -19,29 +21,20 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="input-group date"
-                                 data-date="2018-10-22"
-                                 data-date-format="yyyy-mm-dd"
-                                 data-link-field="BeginDate"
-                                 data-link-format="yyyy-mm-dd">
-                                <input class="form-control" size="16" type="text" value="" readonly>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
-                            <input type="hidden" id="BeginDate" name="BeginDate" value="" />
+                            <input id="BeginDate" name="BeginDate"
+                                   autocomplete="off"
+                                   size="16"
+                                   type="text"
+                                   value="@Model.Input.BeginDate.Date()"
+                                   class="form-control date" />
                         </div>
-
                         <div class="col-md-6">
-                            <div class="input-group date end_date"
-                                 data-date="@Model.Input.EndDate"
-                                 data-date-format="yyyy-mm-dd"
-                                 data-link-field="EndDate"
-                                 data-link-format="yyyy-mm-dd">
-                                <input class="form-control" size="16" type="text" value="" readonly>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
-                            <input type="hidden" id="EndDate" name="EndDate" value="" />
+                            <input id="EndDate" name="EndDate"
+                                   autocomplete="off"
+                                   size="16"
+                                   type="text"
+                                   value="@Model.Input.EndDate.Date()"
+                                   class="form-control date" />
                         </div>
                     </div>
                 </div>
@@ -84,7 +77,7 @@
                         <tr>
                             <td>
                                 <div>
-                                    <a href="/Home/Detail/@item.Id" target="_blank"><span style="font-size:18px;font-weight:600;">@item.Title</span></a>
+                                    <a href="/Home/Detail/@item.Id?key=@Model.Input.Key" target="_blank"><span style="font-size:18px;font-weight:600;">@item.Title</span></a>
                                 </div>
                                 <div>
                                     下载量：@item.Downloads 阅读量：@item.Browses &nbsp;&nbsp;&nbsp;&nbsp; @item.CreateTime.ToShortDateString()
@@ -107,6 +100,7 @@
         $(function () {
             $('.date').datetimepicker({
                 weekStart: 1,
+                format: "yyyy-mm-dd",
                 todayBtn: 1,
                 autoclose: 1,
                 todayHighlight: 1,

@@ -1,5 +1,6 @@
 ﻿using ElasticeSearch_Service;
 using ElasticeSearch_Service.Dtos;
+using Nest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,11 +53,24 @@ namespace ElasticSearch_MVC.Controllers
             return View("Index", result);
         }
 
-        public ActionResult Detail(Guid id)
+        public ActionResult Detail(Guid id, string key)
         {
-            var article = new ESProvider().GetArticle(id);
+            var provider = new ESProvider();
 
-            return View(article);
+            var article = provider.GetArticle(id);
+            var explain = provider.Explain(id, key);
+
+            var vm = new DetailVM()
+            {
+                Article = article,
+            };
+
+            if (explain != null)
+            {
+                vm.Explanation = Newtonsoft.Json.JsonConvert.SerializeObject(explain, Newtonsoft.Json.Formatting.Indented);
+            }
+
+            return View(vm);
         }
 
         public ActionResult About()
@@ -85,5 +99,22 @@ namespace ElasticSearch_MVC.Controllers
         public ArticeSearchVM Input { get; set; }
 
         public PageOut Output { get; set; }
+
+    }
+
+    public class DetailVM
+    {
+        public Article Article { get; set; }
+
+        public string Explanation { get; set; }
+    }
+
+    public static class Extension
+    {
+        public static string Date(this DateTime? dateTime)
+        {
+            if (dateTime.HasValue) return dateTime.Value.ToShortDateString();
+            else return "";
+        }
     }
 }

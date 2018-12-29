@@ -152,5 +152,26 @@ namespace ElasticeSearch_Service
 
             return result.Source;
         }
+
+        public ExplanationDetail Explain(Guid id, string key)
+        {
+            var client = ArticleConfiguration.GetClient();
+
+            var path = new DocumentPath<Article>(id);
+            path.Index(ArticleConfiguration.ArticleIndexName);
+
+            var multiMatch = new MultiMatchQueryDescriptor<Article>();
+            multiMatch.Fields(f => f
+                        .Field(p => p.Title, 1.2) //设置标题的评分高于描述
+                        .Field(p => p.Description, 0.8)
+                        .Field(p => p.Author)
+                       ) //多字段搜索
+                      .Operator(Operator.Or) //多个字段使用或
+                      .Query(key); //查询关键字
+
+            var explainResponse = client.Explain(path, p => p.Query(q => q.MultiMatch(m => multiMatch)));
+
+            return explainResponse.Explanation;
+        }
     }
 }
