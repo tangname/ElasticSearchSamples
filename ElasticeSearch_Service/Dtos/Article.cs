@@ -37,8 +37,9 @@ namespace ElasticeSearch_Service.Dtos
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        /// 类型，标记为全文索引
+        /// 类型 ，标注为Keyword，不会做全文搜索
         /// </summary>
+        [Keyword]
         public string TypeName { get; set; }
         /// <summary>
         /// 下载次数

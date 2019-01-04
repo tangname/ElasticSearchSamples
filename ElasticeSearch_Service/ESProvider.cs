@@ -95,15 +95,17 @@ namespace ElasticeSearch_Service
                       .Operator(Operator.Or) //多个字段使用或
                       .Query(input.Key); //查询关键字
 
-            var filter = new QueryContainerDescriptor<Article>();
+            var createTimeRange = new DateRangeQueryDescriptor<Article>();
+            createTimeRange.Field(f => f.CreateTime);
+
             if (input.BeginDate.HasValue)
             {
-                filter.DateRange(r => r.Field(p => p.CreateTime).GreaterThanOrEquals(input.BeginDate.Value));
+                createTimeRange.GreaterThanOrEquals(input.BeginDate.Value);
             }
 
             if (input.EndDate.HasValue)
             {
-                filter.DateRange(r => r.Field(p => p.CreateTime).LessThan(input.EndDate.Value));
+                createTimeRange.LessThan(input.EndDate.Value);
             }
 
             var result = client.Search<Article>(s => s
@@ -113,7 +115,11 @@ namespace ElasticeSearch_Service
                 .Query(q => q
                     .MultiMatch(m => multiMatch)
                     &&
-                    q.Bool(b => b.Filter(f => filter))
+                    q.Bool(b => b.
+                        Filter(f => f.
+                            DateRange(r => createTimeRange)
+                        )
+                    )
                 )
             //.Sort(sort =>
             //{
@@ -134,6 +140,28 @@ namespace ElasticeSearch_Service
                 Documents = result.Hits.ToList(),
                 TotalCount = result.Total,
             };
+        }
+
+        /// <summary>
+        /// 按类型聚合数据
+        /// </summary>
+        public IReadOnlyCollection<KeyedBucket<string>> Aggs()
+        {
+            var client = ArticleConfiguration.GetClient();
+
+            var result = client.Search<Article>(s => s
+                  .Index(ArticleConfiguration.ArticleIndexName)//设置索引
+                  .Size(0)
+                  .Aggregations(agg => agg
+                        .Terms("TypeAggs", t => t
+                            .Field(f => f.TypeName)
+                            .Size(20))
+                        )
+                  );
+
+            var buckets = result.Aggregations.Terms("TypeAggs").Buckets;
+
+            return buckets;
         }
 
         /// <summary>

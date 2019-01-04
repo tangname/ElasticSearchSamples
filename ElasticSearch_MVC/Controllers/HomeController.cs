@@ -21,12 +21,16 @@ namespace ElasticSearch_MVC.Controllers
                 Sort = 0,
             };
 
-            var output = new ESProvider().Search(input);
+            var provider = new ESProvider();
+
+            var output = provider.Search(input);
+            var buckets = provider.Aggs();
 
             var result = new ArticleResultVM
             {
                 Input = input,
-                Output = output
+                Output = output,
+                Buckets=buckets
             };
 
             return View(result);
@@ -43,11 +47,16 @@ namespace ElasticSearch_MVC.Controllers
             if (input.Page <= 0) input.Page = 1;
             if (input.Size <= 0) input.Size = 50;
 
-            var output = new ESProvider().Search(input);
+            var provider = new ESProvider();
+
+            var output = provider.Search(input);
+            var buckets = provider.Aggs();
+
             var result = new ArticleResultVM
             {
                 Input = input,
-                Output = output
+                Output = output,
+                Buckets = buckets
             };
 
             return View("Index", result);
@@ -100,6 +109,7 @@ namespace ElasticSearch_MVC.Controllers
 
         public PageOut Output { get; set; }
 
+        public IReadOnlyCollection<KeyedBucket<string>> Buckets { get; set; }
     }
 
     public class DetailVM

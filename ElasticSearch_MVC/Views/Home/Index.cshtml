@@ -6,6 +6,8 @@
 
 @model ElasticSearch_MVC.Controllers.ArticleResultVM
 
+
+
 <div style="height:10px;"></div>
 <div class="container">
     @using (Html.BeginForm("GetArticles", "Home", FormMethod.Post, new { id = "searchForm" }))
@@ -68,7 +70,7 @@
 
     <div class="form-group">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <table class="table table-hover table-striped">
                     @foreach (var hit in Model.Output.Documents)
                     {
@@ -80,7 +82,7 @@
                                     <a href="/Home/Detail/@item.Id?key=@Model.Input.Key" target="_blank"><span style="font-size:18px;font-weight:600;">@item.Title</span></a>
                                 </div>
                                 <div>
-                                    下载量：@item.Downloads 阅读量：@item.Browses &nbsp;&nbsp;&nbsp;&nbsp; @item.CreateTime.ToShortDateString()
+                                    下载量：@item.Downloads 阅读量：@item.Browses 作者：@item.Author 类型：@item.TypeName &nbsp;&nbsp;&nbsp;@item.CreateTime.ToShortDateString()
                                     匹配得分：@hit.Score
                                 </div>
                                 <div>
@@ -90,6 +92,16 @@
                         </tr>
                     }
                 </table>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-group" style="font-size:16px;">
+                    @foreach (var item in Model.Buckets)
+                    {
+                        <li class="list-group-item">
+                            @item.Key  <span class="badge">@item.DocCount</span>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     </div>

@@ -16,7 +16,7 @@ namespace ElasticSearch_Init_Datas_Console
             Console.ReadLine();
 
             //重建索引
-           // new IndexProvider().Init();
+            new ESProvider().InitIndex();
 
             //初始化数据
             new ESProvider().IndexDumps();

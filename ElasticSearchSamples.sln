@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElasticSearch_Init_Datas_Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElasticSearch_MVC", "ElasticSearch_MVC\ElasticSearch_MVC.csproj", "{5766BA31-B495-4AC9-B283-5B01D2DC9184}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{7C737252-18F3-4BEF-856F-FF70B4EE5FAD}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\Elastic Search分享.docx = Docs\Elastic Search分享.docx
+		Docs\Elastic Search分享.pptx = Docs\Elastic Search分享.pptx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

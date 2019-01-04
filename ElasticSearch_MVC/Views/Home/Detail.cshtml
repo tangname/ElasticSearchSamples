@@ -39,61 +39,14 @@
             <dd>
                 @Html.DisplayFor(model => model.Article.Description)
             </dd>
-
             <dt>
-                @Html.DisplayNameFor(model => model.Article.TypeName)
+                等等其他字段不再展示...
             </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Article.TypeName)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Article.Downloads)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Article.Downloads)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Article.Browses)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Article.Browses)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Article.IsRecommend)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Article.IsRecommend)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Article.CreateTime)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Article.CreateTime)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Article.Creater)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Article.Creater)
-            </dd>
-
         </dl>
     </div>
     <div>
         <h4>匹配解析：</h4>
-        <hr />
-        <textarea rows="20" style="width:100%">
+        <textarea rows="35" style="width:100%;">
             @Model.Explanation
         </textarea>
     </div>
